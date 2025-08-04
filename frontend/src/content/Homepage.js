@@ -73,9 +73,8 @@ function Homepage(props) {
               </Space>
             }>
             <p className="text-gray-700 mb-4">
-              Once you have completed your elapsed time, please zip the project folder with all your code changes and email it to{" "}
-              <a href="mailto:jobs@softwarethatworksllc.com">jobs@softwarethatworksllc.com</a>. <br />
-              Please make sure to include your full name in the email. Thank you!
+              Once you have completed your elapsed time, please follow the instructions in the email to submit your code. <br />
+              Thank you!
             </p>
           </Card>
         </Col>
