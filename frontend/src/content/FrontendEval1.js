@@ -1,9 +1,24 @@
 import React, {Component, useState, useRef, useEffect} from "react";
-import {Row, Col, Button, Typography, Card, Space} from "antd";
+import {Row, Col, Button, Typography, Card, Space, Input, message, Modal} from "antd";
 
 const {Title, Text} = Typography;
 
 function FrontendEval1(props) {
+  const [name, setName] = useState("");
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleSubmit = () => {
+    if (name.trim()) {
+      setIsModalVisible(true);
+    } else {
+      message.warning("Please enter your name");
+    }
+  };
+
+  const handleModalOk = () => {
+    setIsModalVisible(false);
+  };
+
   return (
     <div>
       <div style={{margin: "20px"}}>
@@ -22,10 +37,43 @@ function FrontendEval1(props) {
           </Col>
           {/* Action Section */}
           <Col span={24}>
-            {/* Space for your work here! Please note - you are allowed to change anything in this document as you see fit, your work does not have to only reside in this section. */}
+            <Card>
+              <Space direction="vertical" size="middle" style={{width: "100%"}}>
+                <Input 
+                  placeholder="Enter your name" 
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  onPressEnter={handleSubmit}
+                  size="large"
+                  style={{maxWidth: 400}}
+                />
+                <Button 
+                  type="primary" 
+                  onClick={handleSubmit}
+                  size="large"
+                >
+                  Submit
+                </Button>
+              </Space>
+            </Card>
           </Col>
         </Row>
       </div>
+      
+      <Modal
+        title="Greeting"
+        open={isModalVisible}
+        onOk={handleModalOk}
+        onCancel={handleModalOk}
+        centered
+        footer={[
+          <Button key="ok" type="primary" onClick={handleModalOk}>
+            OK
+          </Button>
+        ]}
+      >
+        <p style={{fontSize: 18, textAlign: "center"}}>Hello, {name}</p>
+      </Modal>
     </div>
   );
 }
