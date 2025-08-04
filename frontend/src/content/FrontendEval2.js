@@ -1,8 +1,29 @@
 import React, {Component, useState, useRef, useEffect} from "react";
-import {Row, Col, Typography, Card} from "antd";
+import {Row, Col, Typography, Card, Button, Space} from "antd";
 const {Title, Text} = Typography;
 
 function FrontendEval2(props) {
+  const [counter, setCounter] = useState(0);
+
+  const getDisplayValue = (num) => {
+    if (num % 20 === 0 && num !== 0) {
+      return "Superman";
+    } else if (num % 5 === 0 && num !== 0) {
+      return "Man";
+    } else if (num % 4 === 0 && num !== 0) {
+      return "Super";
+    }
+    return num.toString();
+  };
+
+  const increment = () => {
+    setCounter(counter + 1);
+  };
+
+  const decrement = () => {
+    setCounter(counter - 1);
+  };
+
   return (
     <div>
       <div style={{margin: "20px"}}>
@@ -22,7 +43,21 @@ function FrontendEval2(props) {
           </Col>
           {/* Action Section */}
           <Col span={24}>
-            {/* Space for your work here! Please note - you are allowed to change anything in this document as you see fit, your work does not have to only reside in this section. */}
+            <Card>
+              <Space direction="vertical" align="center" size="large" style={{width: "100%"}}>
+                <Title level={1} style={{margin: 0, fontSize: 48}}>
+                  {getDisplayValue(counter)}
+                </Title>
+                <Space size="middle">
+                  <Button type="primary" size="large" onClick={decrement}>
+                    Decrement
+                  </Button>
+                  <Button type="primary" size="large" onClick={increment}>
+                    Increment
+                  </Button>
+                </Space>
+              </Space>
+            </Card>
           </Col>
         </Row>
       </div>
