@@ -1,8 +1,23 @@
-import React, {Component, useState, useRef, useEffect} from "react";
+import React, {Component} from "react";
+import Handlebars from "handlebars";
+import usersTemplate from "./path/to/users.hbs"; // Adjust the path to your .hbs file
 import {Row, Col, Typography, Card, Space} from "antd";
 const {Title, Text} = Typography;
 
-function FrontendEval3(props) {
+function FrontendEval3() {
+  // Define the Users data
+  const Users = ["User 1", "User 2", "User 3"];
+
+  const renderContent = () => {
+    // Compile the Handlebars template
+    const template = Handlebars.compile(usersTemplate);
+    const html = template({ Users });
+
+    // Using dangerouslySetInnerHTML to render the HTML. However, I'm not sure if this is the best practice for security reasons.
+    return <div dangerouslySetInnerHTML={{ __html: html }} />;
+  };
+
+
   return (
     <div>
       <div style={{margin: "20px"}}>
@@ -23,9 +38,9 @@ function FrontendEval3(props) {
               </Text>
             </Card>
           </Col>
-          {/* Action Section */}
+          {/* Render Content Section */}
           <Col span={24}>
-            {/* Space for your work here! Please note - you are allowed to change anything in this document as you see fit, your work does not have to only reside in this section. */}
+            <Card>{renderContent()}</Card>
           </Col>
         </Row>
       </div>
