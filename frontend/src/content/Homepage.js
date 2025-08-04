@@ -41,8 +41,9 @@ function Homepage(props) {
               </Space>
             }>
             <p className="text-gray-700 mb-4">
-              For the frontend evaluation section, please dedicate approximately one hour. This section comprises five evaluations, progressively
-              increasing in difficulty. Don't be discouraged if you're unable to complete all of them; the later evaluations are intentionally
+              For the frontend evaluation section, please dedicate approximately one hour. This section comprises three evaluations. The first 2
+              evaluations are standard React/JS logic interview questions. The 3rd evaluation is specific to the job that you will be doing, and will
+              be the toughest to compelte. Don't be discouraged if you're unable to complete all of them; the later evaluations are intentionally
               designed to go beyond the expected scope for the time allotted. Once your time has been spent, you may submit your code.
               <hr />
               When you are ready, go to the sidebar, to Frontend Evals, and start with Evaluation 1.

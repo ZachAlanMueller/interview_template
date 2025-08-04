@@ -6,6 +6,8 @@ import dayjs from "dayjs";
 import TestingLayout from "./content/TestingLayout.js";
 import Homepage from "./content/Homepage.js";
 import FrontendEval1 from "./content/FrontendEval1.js";
+import FrontendEval2 from "./content/FrontendEval2.js";
+import FrontendEval3 from "./content/FrontendEval3.js";
 
 function App(props) {
   const navigate = useNavigate();
@@ -20,8 +22,8 @@ function App(props) {
         <Route path="/" element={<TestingLayout {...props} />}>
           <Route exact path="/" element={<Homepage {...props} />} />
           <Route exact path="/eval-1" element={<FrontendEval1 {...props} />} />
-          <Route exact path="/eval-2" element={<Homepage {...props} />} />
-          <Route exact path="/eval-3" element={<Homepage {...props} />} />
+          <Route exact path="/eval-2" element={<FrontendEval2 {...props} />} />
+          <Route exact path="/eval-3" element={<FrontendEval3 {...props} />} />
           <Route exact path="/eval-4" element={<Homepage {...props} />} />
           <Route exact path="/eval-5" element={<Homepage {...props} />} />
         </Route>

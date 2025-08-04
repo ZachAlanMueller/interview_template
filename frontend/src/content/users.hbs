@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{product.name}} - Users</title>
+         {{>head}}
+
+    </head>
+
+
+    <body>
+
+
+
+        <!-- Begin page -->
+        <div id="wrapper">
+           
+            {{>sidebar}}
+
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+
+                {{>topbar name="Users"}}
+
+                <!-- Start Page content -->
+                <div class="content">
+                    <div class="container-fluid">
+
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card-box">
+                                   
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <h4 class="m-t-0 header-title">Users</h4>
+                                        </div>
+                                        
+                                        <div class="col-sm-6">
+                                            <div class="text-right">
+                                                <button class="btn btn-info waves-effect waves-light" onclick="back(); return false">
+                                                    Back
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+
+
+                                    <table class="table table-sm">
+                                        {{#each users}}
+                                        <tr>
+                                            <td>{{or username "Not Registered"}}</td>
+                                            <td>{{or email "No Email"}}</td>
+                                            <td local-bind>
+                                                 <vars id="{{id}}" role_id="{{role_id}}"></vars>
+
+                                                 <select class="form-control" bind="role_id">
+                                                {{#each ../roles}}
+                                                <option value="{{id}}">{{name}}</option>
+                                                {{/each}}
+                                                </select>
+
+                                                 <script type="basyl-script">
+                                                    me.bind('role_id', () =>
+                                                    {
+                                                        promiseAjax('/settings/users/update/role', {
+                                                            role_id: me.get('role_id'),
+                                                            id: me.get('id')
+                                                        })
+                                                    })
+                                                </script>
+                                            </td>
+                                            <td>
+                                                <i onclick="disableAccount({{id}})" class="mdi mdi-close dangerIcon" style="position: relative; top: 8px;"></i>
+                                            </td>
+                                       
+
+                                        </tr>
+                                        {{/each}}
+                                    </table>
+                                    
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button class="btn btn-purple" onclick="invite()">Invite</button>                                    
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                       
+                        
+
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <footer class="footer text-right">
+                    {{>copyright}}
+                </footer>
+
+            </div>
+
+
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+        {{>tail}}
+    
+        <script type="text/javascript">
+
+        function disableAccount(id)
+        {
+            flockbase.ask("Are you sure you wish to disable this account?").then(() =>
+            {
+                promiseAjax('/users/disable', { id: id }).then(() =>
+                {
+                    flockbase.alert('Disabled!').then(() =>
+                    {
+                        refreshPage()
+                    })
+                })
+
+            })
+        }
+
+        </script>
+
+        {{#if ELECTRON_MODE}}
+        <script>
+
+            function invite()
+            {
+                flockbase.inputs('User Details', [ 
+                    { text: 'Username' }, 
+                    { text: 'Password', extra: `type="password"` },
+                    { text: 'First' },
+                    { text: 'Last' }
+
+                ]).then(details =>
+                {
+                    let [username, password, first, last] = details
+
+                    let json = {}
+
+                    DiscreteCrypt.utils.scryptPromise(password, Buffer.from(username.toLowerCase().normalize('NFKC')), 1 << 11, 4, 1, 32).then(DiscreteCrypt.utils.hex).then(pass =>
+                    {
+                        SecureClient.Encrypt($$.get('master_password'), pass).then(data =>
+                        {
+                            json.master = data
+
+                            promiseAjax('/users/invite', {
+                                username: username,
+                                password: password,
+                                json: JSON.stringify(json),
+                                first: first,
+                                last: last
+                            }).then(() =>
+                            {
+                                refreshPage()
+                            })
+                        })
+                    })
+                })
+            }
+
+            
+        </script>
+        {{else}}
+        <script>
+        function testSignup(email)
+        {
+            email = email
+            return promiseAjax('/users/invite', {email: email}).then(token =>
+            {
+                return SecureServer.Send('/users/create', {
+                    token: token,
+                    email: email,
+                    masterpass: $$.get('master_password')
+                })
+            })
+        }
+
+        function invite()
+        {
+            let val = $('option')[0].value
+            flockbase.prompt("User's Email").then(email =>
+            {
+                return testSignup(email)
+            }).then(() =>
+            {
+                refreshPage()
+            })
+        }
+        </script>
+        {{/if}}
+           
+
+    </body>
+</html>

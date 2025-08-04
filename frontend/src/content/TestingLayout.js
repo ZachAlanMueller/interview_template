@@ -68,7 +68,7 @@ function TestingLayout(props) {
         },
         {
           key: "3",
-          disabled: true,
+          disabled: false,
           label: (
             <Link to="/eval-3" style={{color: "black"}}>
               Evaluation 3
