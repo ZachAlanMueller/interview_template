@@ -1,9 +1,9 @@
-import React, {Component, useState, useRef, useEffect} from "react";
+import React, {Component} from "react";
 import {Row, Col, Button, Typography, Card, Space} from "antd";
 
 const {Title, Text} = Typography;
 
-function FrontendEval1(props) {
+function FrontendEval1() {
   return (
     <div>
       <div style={{margin: "20px"}}>
@@ -22,8 +22,12 @@ function FrontendEval1(props) {
           </Col>
           {/* Action Section */}
           <Col span={24}>
-            {/* Space for your work here! Please note - you are allowed to change anything in this document as you see fit, your work does not have to only reside in this section. */}
+          <Input className="w-full" placeholder="Enter your name" />
+            <Button type="primary" className="mt-4" onClick={() => alert(`Hello, ${name}`)}>
+              Submit
+            </Button>
           </Col>
+            {/* Space for your work here! Please note - you are allowed to change anything in this document as you see fit, your work does not have to only reside in this section. */}
         </Row>
       </div>
     </div>

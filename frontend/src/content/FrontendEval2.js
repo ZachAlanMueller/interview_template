@@ -1,8 +1,23 @@
-import React, {Component, useState, useRef, useEffect} from "react";
+import React, {Component, useState} from "react";
 import {Row, Col, Typography, Card} from "antd";
 const {Title, Text} = Typography;
 
-function FrontendEval2(props) {
+function FrontendEval2() {
+  const [counter, setCounter] = useState(0);
+  const displayValue = () => {
+    // Check divisibility and return appropriate value
+    if (counter % 4 === 0 && counter % 5 === 0) {
+      return "Superman";
+    } else if (counter % 4 === 0) {
+      return "Super";
+    } else if (counter % 5 === 0) {
+      return "Man";
+    } else {
+      return counter;
+    }
+  };
+
+
   return (
     <div>
       <div style={{margin: "20px"}}>
@@ -22,6 +37,17 @@ function FrontendEval2(props) {
           </Col>
           {/* Action Section */}
           <Col span={24}>
+            <div className="flex items-center">
+              <Text className="text-2xl mr-4">
+                {displayValue()}
+              </Text>
+              <Button type="primary" className="mr-2" onClick={() => {counter < 100 && setCounter(counter + 1);}}>
+                Increment
+              </Button>
+              <Button type="secondary" onClick={() => {counter > 0 && setCounter(counter - 1);}}>
+                Decrement
+              </Button>
+            </div>
             {/* Space for your work here! Please note - you are allowed to change anything in this document as you see fit, your work does not have to only reside in this section. */}
           </Col>
         </Row>
