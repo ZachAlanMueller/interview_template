@@ -1,4 +1,5 @@
 # interview_template
+
 Prerequisites
 
 Before you begin, ensure you have the following installed:
@@ -12,11 +13,15 @@ Installation
     Start by cloning this repository to your local machine using Git. If you don't have Git installed, you can download it from git-scm.com.
     Bash
 
-git clone https://github.com/ZachAlanMueller/interview_template.git
+    git clone https://github.com/ZachAlanMueller/interview_template.git
 
 Navigate to the project directory: Bash
 
-cd interview_template
+    cd interview_template
+
+Then navigate to the frontend folder
+
+    cd frontend
 
 Install dependencies:
 
